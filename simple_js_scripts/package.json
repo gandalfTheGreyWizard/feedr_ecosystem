@@ -1,0 +1,6 @@
+{
+  "type": "module",
+	"dependencies": {
+		"rsshub": "1.0.0-master.8d73b40"
+	}
+}

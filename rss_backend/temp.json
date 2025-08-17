@@ -1,0 +1,20 @@
+{
+  "userId": "6866a4ca0dc1b0ec46129bcb",
+  "feedsList": [
+    {
+      "feedName": "CRT Anime",
+      "feedUrl": "https://www.reddit.com/r/CRTAnime.rss",
+      "feedSource": "reddit"
+    },
+    {
+      "feedName": "unsupervised learning",
+      "feedSource": "Youtube",
+      "feedUrl": "https://www.youtube.com/feeds/videos.xml?channel_id=UCnCikd0s4i9KoDtaHPlK-JA"
+    },
+    {
+      "feedName": "Java Discussions",
+      "feedSource": "Reddit",
+      "feedUrl": "https://www.reddit.com/r/java.rss"
+    }
+  ]
+}
