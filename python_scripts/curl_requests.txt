@@ -1,0 +1,16 @@
+
+-- users --
+# create a user
+curl -XPOST http://localhost:5000/users/insert_user -d '{"username": "gandalf", "type":"wizard"}' -H "Content-Type:application/json"
+
+# create a jwt token for existing user
+curl localhost:5000/admin/generate_jwt/6866a4ca0dc1b0ec46129bcb
+
+
+-- config --
+# create a config against existing user
+curl -X PUT http://localhost:5000/config/6866a4ca0dc1b0ec46129bcb/create_or_update -d '{"userId": "6866a4ca0dc1b0ec46129bcb", "feedsList": [{"feedName": "CRT Anime", "feedUrl": "https://www.reddit.com/r/CRTAnime.rss", "feedSource": "reddit"}, {"feedName": "unsupervised learning", "feedSource": "Youtube", "feedUrl": "https://www.youtube.com/feeds/videos.xml?channel_id=UCnCikd0s4i9KoDtaHPlK-JA"}, {"feedName": "Java Discussions", "feedSource": "Reddit", "feedUrl": "https://www.reddit.com/r/java.rss"}]}' -H "Content-Type:application/json"
+
+-- rss --
+# get all feeds from a user defined db config | if any
+curl localhost:5000/rss/from_config/<user-id>
