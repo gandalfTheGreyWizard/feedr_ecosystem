@@ -1,10 +1,14 @@
-import { Controller, Get, Body, Post, Param } from '@nestjs/common';
+import { Controller, Get, Body, Post, Param, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from './config.service';
-import { UserConfigInterface, GetConfigParams } from 'src/dtos/config.interface';
+import { UserConfigInterface, GetConfigParams, FeedsUrlSqlList } from 'src/dtos/config.interface';
+import { PrismaserviceService } from '../prismaservice/prismaservice.service';
 
 @Controller('config')
 export class ConfigController {
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private prismaService: PrismaserviceService,
+  ) {}
 
   @Get()
   async getUserConfig(): Promise<UserConfigInterface | null> {
@@ -24,5 +28,37 @@ export class ConfigController {
     @Param('userId') userId: string,
   ): Promise<UserConfigInterface | void> {
     await this.configService.createConfigAgainstId(createConfigObject, userId);
+  }
+
+  @Post('/user/:userId')
+  async createConfigAgainstUserIdInSql(
+    @Body() createConfigObject: UserConfigInterface,
+    @Param('userId') userId: string,
+  ): Promise<UserConfigInterface | void> {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id: Number(userId),
+      },
+    });
+    if (user) {
+      const feedsUrlList: FeedsUrlSqlList[] = [];
+      createConfigObject.feedsList.forEach((eachFeed) => {
+        const data: FeedsUrlSqlList = {
+          feed_name: eachFeed.feedName,
+          feed_source: eachFeed.feedSource,
+          feed_url: eachFeed.feedUrl,
+          userId: Number(userId),
+        };
+        feedsUrlList.push(data);
+      });
+      await this.prismaService.config.createMany({
+        data: feedsUrlList,
+      });
+    } else {
+      throw new HttpException(
+        { message: 'no such user found' },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }

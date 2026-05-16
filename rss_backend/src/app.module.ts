@@ -7,6 +7,7 @@ import { ConfigModule } from './config/config.module';
 import { FeedsParserService } from './helpers/feeds-parser/feeds-parser.service';
 import { HttpModule } from '@nestjs/axios';
 import { RssModule } from './rss/rss.module';
+import { PrismaserviceService } from './prismaservice/prismaservice.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { RssModule } from './rss/rss.module';
     RssModule,
   ],
   controllers: [AppController],
-  providers: [AppService, FeedsParserService],
+  providers: [AppService, FeedsParserService, PrismaserviceService],
 })
 export class AppModule {}

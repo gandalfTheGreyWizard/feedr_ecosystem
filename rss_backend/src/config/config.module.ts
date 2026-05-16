@@ -4,6 +4,7 @@ import { ConfigService } from './config.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserConfig, UserConfigSchema } from './config.schema';
 import { UserSchema, User } from 'src/users/user.schema';
+import { PrismaserviceService } from '../prismaservice/prismaservice.service';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { UserSchema, User } from 'src/users/user.schema';
     ]),
   ],
   controllers: [ConfigController],
-  providers: [ConfigService],
+  providers: [ConfigService, PrismaserviceService],
 })
 export class ConfigModule {}
