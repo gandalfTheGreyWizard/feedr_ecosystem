@@ -5,8 +5,10 @@ export interface Feed {
 }
 
 export interface UserConfigInterface {
-  userId: string;
-  feedsList: Feed[];
+  feedName: string;
+  feedUrl: string;
+  feedClass: string;
+  customParser: boolean;
 }
 
 export interface GetConfigParams {

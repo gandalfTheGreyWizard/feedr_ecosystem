@@ -5,12 +5,10 @@ import { FeedsParserService } from 'src/helpers/feeds-parser/feeds-parser.servic
 import { HttpModule } from '@nestjs/axios';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/users/user.schema';
-import { UserConfig, UserConfigSchema } from 'src/config/config.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: UserConfig.name, schema: UserConfigSchema },
       { name: User.name, schema: UserSchema },
     ]),
     HttpModule,

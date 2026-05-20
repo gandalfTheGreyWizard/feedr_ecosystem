@@ -1,53 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserConfig } from './config.schema';
 import { UserConfigInterface } from 'src/dtos/config.interface';
 import { User } from 'src/users/user.schema';
+import { UserConfig } from './config.schema';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class ConfigService {
   constructor(
-    @InjectModel(UserConfig.name) private userConfigModel: Model<UserConfig>,
     @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(UserConfig.name) private userConfigModel: Model<UserConfig>,
   ) {}
 
-  async listConfigs(): Promise<UserConfigInterface | null> {
+  async getConfig(userId: string): Promise<UserConfigInterface[] | void> {
     try {
-      const findOneData = await this.userConfigModel.findOne();
-      console.log(findOneData);
+      const user = await this.userModel.findById(userId);
+      return user?.configs;
     } catch (error) {
       console.error(error);
     }
-    return await this.userConfigModel.findOne();
   }
 
-  //async createConfig(
-    //userConfigObject: UserConfigInterface,
-  //): Promise<UserConfigInterface> {
-    //return await this.userConfigModel.create(userConfigObject);
-  //}
   async createConfigAgainstId(
     userConfigObject: UserConfigInterface,
     userId: string,
-  ): Promise<UserConfigInterface | void> {
+  ): Promise<UserConfigInterface | void | HttpException> {
     try {
       const currentUser = await this.userModel.findById(userId);
       const currentUserId = currentUser ? currentUser._id.toString() : null;
-      if (currentUserId) {
-        userConfigObject.userId = currentUserId;
-        //const currentUserConfig = await this.userConfigModel.findOne({
-          //userId: currentUserId,
-        //});
-        await this.userConfigModel.updateOne(
-          { userId: currentUserId },
-          userConfigObject,
-          { upsert: true },
-        );
-      }
+      const updatedDocument = await this.userModel.findByIdAndUpdate(userId, { $push: { configs: userConfigObject } });
+    return await this.userConfigModel.create(userConfigObject);
     } catch (error) {
       console.error(error);
+      throw new HttpException('no such user', HttpStatus.NOT_FOUND);
     }
-    //return await this.userConfigModel.create(userConfigObject);
   }
 }

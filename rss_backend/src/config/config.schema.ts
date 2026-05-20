@@ -1,13 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Feed } from '../dtos/config.interface';
+import { HydratedDocument } from 'mongoose';
+
+export type UserDocument = HydratedDocument<UserConfig>;
+
+const feedClasses = ['default'];
 
 @Schema()
 export class UserConfig {
   @Prop()
-  userId: string;
+  feedName: string;
 
   @Prop()
-  feedsList: Feed[];
+  feedUrl: string;
+
+  @Prop({ enum: feedClasses })
+  feedClass: string;
+
+  @Prop()
+  customParser: boolean;
 }
 
 export const UserConfigSchema = SchemaFactory.createForClass(UserConfig);

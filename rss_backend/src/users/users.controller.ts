@@ -1,14 +1,11 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserInterface } from '../dtos/user.interface';
 import { UsersService } from './users.service';
-import { PrismaserviceService } from '../prismaservice/prismaservice.service';
-import { Prisma } from 'generated/prisma';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private userService: UsersService,
-    private prismaService: PrismaserviceService,
   ) {}
 
   @Get()
@@ -29,7 +26,7 @@ export class UsersController {
   @Post()
   async createUserInSql(
     @Body() createUserObject: UserInterface,
-  ): Promise<UserInterface> {
-    return await this.prismaService.user.create({data: createUserObject});
+  ): Promise<UserInterface | void> {
+    //return await this.prismaService.user.create({data: createUserObject});
   }
 }
