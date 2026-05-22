@@ -5,10 +5,19 @@ export interface Feed {
 }
 
 export interface UserConfigInterface {
-  userId: string;
-  feedsList: Feed[];
+  feedName: string;
+  feedUrl: string;
+  feedClass: string;
+  customParser: boolean;
 }
 
 export interface GetConfigParams {
   userId: string;
+}
+
+export interface FeedsUrlSqlList {
+  userId: number;
+  feed_name: string;
+  feed_source: string;
+  feed_url: string;
 }

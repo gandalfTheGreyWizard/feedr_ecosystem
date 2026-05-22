@@ -3,7 +3,7 @@ import { ConfigController } from './config.controller';
 import { ConfigService } from './config.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserConfig, UserConfigSchema } from './config.schema';
-import { UserSchema, User } from 'src/users/user.schema';
+import { User, UserSchema } from 'src/users/user.schema';
 
 @Module({
   imports: [

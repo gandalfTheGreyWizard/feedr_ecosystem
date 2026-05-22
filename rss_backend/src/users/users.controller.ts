@@ -4,7 +4,9 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+  ) {}
 
   @Get()
   getUser(): { message: string } {
@@ -19,5 +21,12 @@ export class UsersController {
     //const response_object:UserInterface =
       //await this.userService.createUser(createUserObject);
     //return response_object;
+  }
+
+  @Post()
+  async createUserInSql(
+    @Body() createUserObject: UserInterface,
+  ): Promise<UserInterface | void> {
+    //return await this.prismaService.user.create({data: createUserObject});
   }
 }

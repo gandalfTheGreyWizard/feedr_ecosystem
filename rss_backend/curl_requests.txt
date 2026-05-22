@@ -1,0 +1,9 @@
+# create a user
+curl -XPOST localhost:3000/users/create-user -d '{"name":"userA", "type":"userTypeA"}' -H "Content-Type:application/json"
+
+# add configs against user id
+curl -XPOST localhost:3000/config/create/6a0de2a0ca1f25175fdbcaf3 -d '{"feedName": "the verge", "feedUrl": "https://www.theverge.com/rss/index.xml", "feedClass": "default", "customParser": "false"}' -H "Content-Type:application/json"
+
+# fetch configs against a userId
+curl localhost:3000/config/6a0de2a0ca1f25175fdbcaf3
+
