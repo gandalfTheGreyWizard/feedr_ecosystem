@@ -1,0 +1,6 @@
+[submodule "rss_standalone_client"]
+	path = rss_standalone_client
+	url = https://github.com/gandalfTheGreyWizard/rss_standalone_client
+[submodule "rss_backend_ecosystem"]
+	path = rss_backend_ecosystem
+	url = https://github.com/gandalfTheGreyWizard/rss_backend_ecosystem
