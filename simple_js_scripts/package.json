@@ -1,6 +1,8 @@
 {
   "type": "module",
-	"dependencies": {
-		"rsshub": "1.0.0-master.8d73b40"
-	}
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "masto": "^7.11.1",
+    "rsshub": "1.0.0-master.8d73b40"
+  }
 }
